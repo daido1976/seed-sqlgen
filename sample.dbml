@@ -1,0 +1,78 @@
+Project scoutea {
+  database_type: 'MySQL'
+  Note: 'scoutea db'
+}
+
+Table suppliers {
+  id int [pk, increment]
+  name varchar
+}
+
+Table teas {
+  id int [pk, increment]
+  name varchar
+  category varchar
+  shibumi_rate int
+  nigami_rate int
+  amami_rate int
+  location varchar
+  stock int
+  price int
+  supplier_id int
+}
+
+Table blend_tea_rates {
+  id int [pk, increment]
+  rate float
+  tea_id int
+  blend_tea_id int
+}
+
+Table blend_teas {
+  id int [pk, increment]
+  title varchar
+  description varchar
+  margin int
+  visibility varchar
+  blender_id int
+}
+
+Table users {
+  id int [pk, increment]
+  name varchar
+}
+
+Table orders {
+  id int [pk, increment]
+  customer_id int
+  price int
+}
+
+Table order_line_items {
+  id int [pk, increment]
+  order_id int
+  blend_tea_id int
+  quantity int
+}
+
+Table comments {
+  id int [pk, increment]
+  text varchar
+  author_id int
+  blend_tea_id int
+}
+
+// wip
+Table campaigns {
+  id int [pk, increment]
+}
+
+Ref: teas.supplier_id > suppliers.id
+Ref: teas.id < blend_tea_rates.tea_id
+Ref: blend_teas.id < blend_tea_rates.blend_tea_id
+Ref: blend_teas.blender_id > users.id
+Ref: comments.author_id > users.id
+Ref: comments.blend_tea_id > blend_teas.id
+Ref: users.id < orders.customer_id
+Ref: orders.id < order_line_items.order_id
+Ref: order_line_items.blend_tea_id > blend_teas.id
