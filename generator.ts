@@ -10,17 +10,14 @@ export const genStmts = (dbml: string): string[] => {
         }
 
         const colStr = `\`${field.name}\``;
-        acc.columnsStr =
-          acc.columnsStr === "" ? colStr : acc.columnsStr.concat(", ", colStr);
+        acc.columnsStr = concatedStrFrom(acc.columnsStr, colStr);
 
         const valStr = valueStrFrom(
           field.type.type_name,
           field.table.name,
           field.name
         );
-
-        acc.valuesStr =
-          acc.valuesStr === "" ? valStr : acc.valuesStr.concat(", ", valStr);
+        acc.valuesStr = concatedStrFrom(acc.valuesStr, valStr);
         return acc;
       },
       {
@@ -32,6 +29,10 @@ export const genStmts = (dbml: string): string[] => {
     );
     return `INSERT INTO \`${table.name}\` (${res.columnsStr}) VALUES (${res.valuesStr});`;
   });
+};
+
+const concatedStrFrom = (prev: string, current: string) => {
+  return prev === "" ? current : prev.concat(", ", current);
 };
 
 const valueStrFrom = (
@@ -49,7 +50,7 @@ const valueStrFrom = (
   }
 };
 
-// TODO: 実装する
+// TODO: implement
 const singularize = (s: string): string => {
   return s;
 };
