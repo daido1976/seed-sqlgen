@@ -5,4 +5,4 @@ const decoder = new TextDecoder("utf-8");
 const dbml = decoder.decode(rawDbml);
 
 const stmts = genStmts(dbml);
-console.log(stmts);
+stmts.forEach((stmt) => console.log(stmt));
