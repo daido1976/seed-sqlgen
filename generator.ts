@@ -9,15 +9,15 @@ export const genStmts = (dbml: string): string[] => {
           return acc;
         }
 
-        const colStr = `\`${field.name}\``;
-        acc.columnsStr = concatedStrFrom(acc.columnsStr, colStr);
-
-        const valStr = valueStrFrom(
-          field.type.type_name,
-          field.table.name,
-          field.name
+        acc.columnsStr = concatedStrFrom(
+          acc.columnsStr,
+          columnStrFrom(field.name)
         );
-        acc.valuesStr = concatedStrFrom(acc.valuesStr, valStr);
+
+        acc.valuesStr = concatedStrFrom(
+          acc.valuesStr,
+          valueStrFrom(field.type.type_name, field.table.name, field.name)
+        );
         return acc;
       },
       {
@@ -27,11 +27,15 @@ export const genStmts = (dbml: string): string[] => {
         valuesStr: "",
       }
     );
-    return `INSERT INTO \`${table.name}\` (${res.columnsStr}) VALUES (${res.valuesStr});`;
+    return stmtFrom(table.name, res.columnsStr, res.valuesStr);
   });
 };
 
-const concatedStrFrom = (prev: string, current: string) => {
+const columnStrFrom = (colName: string): string => {
+  return `\`${colName}\``;
+};
+
+const concatedStrFrom = (prev: string, current: string): string => {
   return prev === "" ? current : prev.concat(", ", current);
 };
 
@@ -53,4 +57,12 @@ const valueStrFrom = (
 // TODO: implement
 const singularize = (s: string): string => {
   return s;
+};
+
+const stmtFrom = (
+  tableName: string,
+  columnsStr: string,
+  valuesStr: string
+): string => {
+  return `INSERT INTO \`${tableName}\` (${columnsStr}) VALUES (${valuesStr});`;
 };
