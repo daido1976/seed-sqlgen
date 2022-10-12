@@ -40,7 +40,7 @@ const concatedStrFrom = (prev: string, current: string): string => {
 };
 
 const valueStrFrom = (
-  colType: "varchar" | "int" | "float",
+  colType: "varchar" | "int" | "float" | "boolean" | "date",
   tableName: string,
   colName: string
 ): string => {
@@ -51,6 +51,10 @@ const valueStrFrom = (
       return "1";
     case "float":
       return "0.5";
+    case "boolean":
+      return "false";
+    case "date":
+      return "'2022-10-12'";
   }
 };
 
