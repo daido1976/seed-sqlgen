@@ -1,6 +1,6 @@
-Project scoutea {
+Project sample {
   database_type: 'MySQL'
-  Note: 'scoutea db'
+  Note: 'sample db'
 }
 
 Table suppliers {
