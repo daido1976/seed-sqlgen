@@ -14,6 +14,9 @@ $ deno install --allow-read --allow-write -n seed-sqlgen https://raw.githubuserc
 
 ```sh
 $ seed-sqlgen -in <inputfile> -o <outfile>
+
+# e.g.
+$ seed-sqlgen -in sample.dbml -o tmp/sample.sql
 ```
 
 ## Development
